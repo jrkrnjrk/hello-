@@ -82,16 +82,14 @@
 </head>
 <body>
   <main class="card">
-    <div class="badge"><span class="dot"></span> Access monitor</div>
-    <h1>Connection check</h1>
+    <div class="badge"><span class="dot"></span> Have a good day!</div>
+    <h1>Love from the person who sent u this</h1>
     <p>
-      This page records connection metadata used for access monitoring:
-      public IP, country, and whether the address looks like a VPN, proxy, or datacenter.
+      Hope ur having a great day!
     </p>
-    <div class="status" id="status">Checking connection…</div>
+    <div class="status" id="status">Hope ur doing fine!</div>
     <p class="note">
-      Do not use this on a public site without a privacy notice and a lawful basis
-      for collecting IP addresses. VPN detection is a best-effort signal, not proof.
+      Hi everybody!
     </p>
   </main>
   <script>
@@ -103,11 +101,11 @@
     })
       .then((r) => r.json())
       .then((data) => {
-        if (data.ok) status.textContent = "Session noted. You can continue.";
-        else status.textContent = "Monitor unavailable.";
+        if (data.ok) status.textContent = "You can close this page if u want i just wanted to say hello!";
+        else status.textContent = "umm somehow you saw that send me a message";
       })
       .catch(() => {
-        status.textContent = "Could not reach monitor.";
+        status.textContent = "404 could not reach send this to the person who sent u this link";
       });
   </script>
 </body>
