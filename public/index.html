@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secure Gate</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    :root {
+      --bg: #07090f;
+      --panel: #10141d;
+      --line: #1f2a3a;
+      --text: #e8eef7;
+      --muted: #8b9bb0;
+      --accent: #5eead4;
+      --warn: #fbbf24;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background:
+        radial-gradient(900px 500px at 10% -10%, #12343a 0%, transparent 50%),
+        radial-gradient(700px 400px at 100% 0%, #1a2040 0%, transparent 45%),
+        var(--bg);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+    .card {
+      width: min(560px, 100%);
+      background: color-mix(in srgb, var(--panel) 92%, black);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    h1 {
+      margin: 18px 0 8px;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+    }
+    p { color: var(--muted); line-height: 1.55; margin: 0 0 16px; }
+    .status {
+      margin-top: 8px;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: #0c1118;
+      border: 1px solid var(--line);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    .note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #6d7b8d;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="badge"><span class="dot"></span> Access monitor</div>
+    <h1>Connection check</h1>
+    <p>
+      This page records connection metadata used for access monitoring:
+      public IP, country, and whether the address looks like a VPN, proxy, or datacenter.
+    </p>
+    <div class="status" id="status">Checking connection…</div>
+    <p class="note">
+      Do not use this on a public site without a privacy notice and a lawful basis
+      for collecting IP addresses. VPN detection is a best-effort signal, not proof.
+    </p>
+  </main>
+  <script>
+    const status = document.getElementById("status");
+    fetch("/api/visit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: location.pathname })
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.ok) status.textContent = "Session noted. You can continue.";
+        else status.textContent = "Monitor unavailable.";
+      })
+      .catch(() => {
+        status.textContent = "Could not reach monitor.";
+      });
+  </script>
+</body>
+</html>

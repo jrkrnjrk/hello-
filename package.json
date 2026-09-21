@@ -1,0 +1,17 @@
+{
+  "name": "visitor-alert",
+  "version": "1.0.0",
+  "description": "Access page that logs visitor IP, country, and VPN/proxy signals to a Discord webhook",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0"
+  }
+}
